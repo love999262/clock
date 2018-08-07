@@ -5,9 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Clock</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .clock {
+            width: 800px;
+            height: 800px;
+            border: 1px solid red;
+            margin: 50px;
+        }
+    </style>
 </head>
 <body>
+    <div class="clock"></div>
     <script src="../dist/clock.js"></script>
     <script src="/clock.js"></script>
+    <script>
+        const clock = new Clock({
+            size: document.querySelectorAll('.clock')[0].offsetWidth - 2,
+        });    
+    </script>
 </body>
 </html>

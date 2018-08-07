@@ -34,13 +34,6 @@ module.exports = {
                 loader: 'eslint-loader',
                 include: path.resolve(__dirname, '../src/js'),
             }, {
-                test: /\.jsx?$/,
-                loader: 'babel-loader',
-                exclude: /node_modules/,
-                options: {
-                    presets: ['env'],
-                }
-            }, {
                 test: /\.sass$/,
                 use: [{
                         loader: 'style-loader',
@@ -86,7 +79,6 @@ module.exports = {
         // clientLogLevel: 'none',
         quiet: false,
         open: true,
-        openPage: 'http://localhost:2333/webpack-dev-server/demo/index.html',
         historyApiFallback: {
             disableDotRule: true
         },
