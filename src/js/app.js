@@ -1,5 +1,6 @@
 import CssRender from './components/css-render';
 import CanvasRender from './components/canvas-render';
+import Digital from './components/digital';
 
 class Clock {
     constructor(config) {
@@ -9,6 +10,9 @@ class Clock {
             bgColor: '#fff',
             hasTimeLabel: true,
             size: 500,
+            digital: {
+                fontSize: 12,
+            },
         }, config);
         this.render(this.config);
         console.log('clock Rendered');
@@ -20,6 +24,9 @@ class Clock {
                 break;
             case 'css':
                 this.clock = new CssRender(config);
+                break;
+            case 'digital':
+                this.clock = new Digital(config);
                 break;
             default:
                 this.clock = new CanvasRender(config);
