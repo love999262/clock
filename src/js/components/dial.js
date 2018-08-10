@@ -1,8 +1,5 @@
-import Render from './render';
-
-class CanvasRender extends Render {
+class Dial {
     constructor(config) {
-        super(config);
         this.render();
     }
     render() {
@@ -38,4 +35,4 @@ class CanvasRender extends Render {
     }
 }
 
-export default CanvasRender;
+export default Dial;
