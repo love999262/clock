@@ -12,6 +12,7 @@ class Clock {
             hasTimeLabel: true,
             size: 500,
             renderType: 'css',
+            prefix: 'syg-clock',
             digital: {
                 fontSize: 12,
             },

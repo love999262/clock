@@ -1,0 +1,57 @@
+@import 'global';
+
+.#{$prefix} {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    &-panel {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 1px solid $black;
+    }
+    &-doc {
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        border-radius: 50%;
+        background: $black;
+        transform: translate(-50%, -50%);
+    }
+    &-hour, &-minute, &-second {
+        width: 50%;
+        position: absolute;
+        top: 50%;
+        transform-origin: bottom right;
+        > div {
+            position: relative;
+            height: 100%;
+            top: 50%;
+            float: right;
+            background: $black;
+        }
+    }
+    &-hour {
+        transform: translateY(-100%) rotate(0deg);
+        height: 4px;
+        &-hand {
+            width: 50%;
+        }
+    }
+    &-minute {
+        transform: translateY(-100%) rotate(90deg);
+        height: 3px;
+        &-hand {
+            width: 80%;
+        }
+    }
+    &-second {
+        transform: translateY(-100%) rotate(90deg);
+        height: 1px;
+        &-hand {
+            width: 90%;
+        }
+    }
+}

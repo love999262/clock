@@ -3,26 +3,19 @@ import Time from './time';
 class Digital {
     constructor(config) {
         this.config = config;
-        this.container = utils.$(this.config.selector)[0];
+        this.container = utils.$(this.config.selector);
         switch (this.config.renderType) {
             case 'css':
-                this.render(this.cssRender);
+                utils.render(this.cssRender, this);
                 break;
             case 'canvas':
                 this.getCanvas();
-                this.render(this.canvasRenver);
+                utils.render(this.canvasRenver, this);
                 break;
             default:
-                this.render(this.cssRender);
+                utils.render(this.cssRender, this);
         }
 
-    }
-    render(callback) {
-        if (!(typeof callback === 'function')) {
-            return false;
-        }
-        callback.call(this);
-        utils.loop(callback.bind(this));
     }
     getTime() {
         return Time.getDate();

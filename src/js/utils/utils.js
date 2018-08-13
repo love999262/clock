@@ -1,8 +1,8 @@
 const utils = {
-    $: function(selector) {
-        return  document.querySelectorAll(selector);
+    $: function (selector) {
+        return document.querySelector(selector);
     },
-    loop: function(callback, interval) {
+    loop: function (callback, interval) {
         if (!interval) {
             interval = (1 / 60) * 1000;
         }
@@ -33,6 +33,21 @@ const utils = {
             });
         }
         return result;
+    },
+    parseToDOM: function (str) {
+        const ele = document.createElement('div');
+        ele.innerHTML = str;
+        return ele.children[0];
+    },
+    find(parent, children) {
+        return parent.querySelector(children);
+    },
+    render(callback, context) {
+        if (!(typeof callback === 'function')) {
+            return false;
+        }
+        callback.call(context);
+        this.loop(callback.bind(context));
     },
 };
 

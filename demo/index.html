@@ -12,8 +12,8 @@
         }
         
         .clock {
-            width: 800px;
-            height: 800px;
+            width: 40px;
+            height: 40px;
             border: 1px solid red;
             margin: 50px;
         }
@@ -25,11 +25,14 @@
     <script src="/clock.js"></script>
     <script>
         const clock = new Clock({
-            size: document.querySelectorAll('.clock')[0].offsetWidth - 2,
-            // type: 'dial',
-            renderType: 'canvas',
+            // size: document.querySelectorAll('.clock')[0].offsetWidth - 2,
+            type: 'dial',
+            renderType: 'css',
             digital: {
                 fontSize: 30,
+            },
+            dial: {
+
             }
         });    
     </script>

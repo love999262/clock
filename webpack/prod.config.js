@@ -29,51 +29,51 @@ module.exports = {
     module: {
         strictExportPresence: true,
         rules: [{
-            test: /\.jsx?$/,
-            enforce: 'pre',
-            loader: 'eslint-loader',
-            include: path.resolve(__dirname, '../src/js'),
-        }, {
-            test: /\.jsx?$/,
-            loader: 'babel-loader',
-            exclude: /node_modules/,
-            options: {
-                presets: ['env'],
-            }
-        }, {
-            test: /\.sass$/,
-            use: [{
-                loader: 'style-loader',
-            },
-            {
-                loader: 'css-loader',
+                test: /\.jsx?$/,
+                enforce: 'pre',
+                loader: 'eslint-loader',
+                include: path.resolve(__dirname, '../src/js'),
+            }, {
+                test: /\.jsx?$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/,
                 options: {
-                    minimize: {
-                        discardComments: {
-                            removeAll: true
-                        },
+                    presets: ['env'],
+                }
+            }, {
+                test: /\.scss$/,
+                use: [{
+                        loader: 'style-loader',
                     },
-                    importLoaders: 2,
-                }
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            minimize: {
+                                discardComments: {
+                                    removeAll: true
+                                },
+                            },
+                            importLoaders: 2,
+                        }
+                    },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: [autoprefixer],
+                        }
+                    },
+                    {
+                        loader: 'sass-loader',
+                    },
+                ]
             },
             {
-                loader: 'postcss-loader',
+                test: /\.(png|jpg)$/,
+                loader: 'url-loader',
                 options: {
-                    plugins: [autoprefixer],
+                    'limit': 40000,
                 }
             },
-            {
-                loader: 'sass-loader',
-            },
-            ]
-        },
-        {
-            test: /\.(png|jpg)$/,
-            loader: 'url-loader',
-            options: {
-                'limit': 40000,
-            }
-        },
         ]
     },
 
