@@ -1,5 +1,4 @@
 class Time {
-    constructor() {}
     static getDate() {
         Time.date = new Date();
         return {

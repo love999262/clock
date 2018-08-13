@@ -1,12 +1,13 @@
-import Time from './time';
+import Time from './../utils/time';
 import utils from './../utils/utils';
 class Dial {
     constructor(config) {
         this.config = config;
         this.container = utils.$(this.config.selector);
-        this.size = this.container.offsetWidth && (this.container.offsetWidth > this.container.offsetHeight) ? this.container.offsetHeight : this.container.offsetWidth;
-        this.size -= 4;
-        this.time = new Time();
+        this.size = this.container.clientWidth && (this.container.clientWidth > this.container.clientHeight) ? this.container.clientHeight : this.container.clientWidth;
+        if (this.size <= 50) {
+            this.isSmall = true;
+        }
         this.prefix = this.config.prefix;
         console.log('width', this.container.width);
         switch (this.config.renderType) {
@@ -43,25 +44,44 @@ class Dial {
         }
         return this._dialTpl;
     }
-    get hourHand() {
+    get hourNode() {
         return utils.find(this.dialTemplate, `.${this.prefix}-hour`);
     }
-    get minuteHand() {
+    get minuteNode() {
         return utils.find(this.dialTemplate, `.${this.prefix}-minute`);
     }
-    get secondHand() {
+    get secondNode() {
         return utils.find(this.dialTemplate, `.${this.prefix}-second`);
+    }
+    get doc() {
+        return utils.find(this.dialTemplate, `.${this.prefix}-doc`);
+    }
+    get panel() {
+        return utils.find(this.dialTemplate, `.${this.prefix}-panel`);
     }
     getCss() {
         if (this.size) {
+            if (this.isSmall) {
+                utils.addClass(this.dialTemplate, 'mode-small');
+            }
+            if (this.config.color) {
+                this.panel.style.cssText += `;border: 1px solid ${this.config.color};`;
+                utils.find(this.hourNode, `.${this.prefix}-hour-hand`).style.cssText += `;background-color: ${this.config.color};`;
+                utils.find(this.minuteNode, `.${this.prefix}-minute-hand`).style.cssText += `;background-color: ${this.config.color};`;
+                utils.find(this.secondNode, `.${this.prefix}-second-hand`).style.cssText += `;background-color: ${this.config.color};`;
+                this.doc.style.cssText += `;background-color: ${this.config.color};`;
+            }
+            if (this.config.bgColor) {
+                this.panel.style.cssText += `;background-color: ${this.config.bgColor};`;
+            }
             this.dialTemplate.style.cssText += `;width: ${this.size}px; height: ${this.size}px;`;
         }
         this.container.appendChild(this.dialTemplate);
     }
     cssRender() {
-        this.hourHand.style.cssText += `;transform: translateY(-100%) rotate(${this.getAngle().h}deg);`;
-        this.minuteHand.style.cssText += `;transform: translateY(-100%) rotate(${this.getAngle().m}deg);`;
-        this.secondHand.style.cssText += `;transform: translateY(-100%) rotate(${this.getAngle().s}deg);`;
+        this.hourNode.style.cssText += `;transform: translateY(-100%) rotate(${this.getAngle().h}deg);`;
+        this.minuteNode.style.cssText += `;transform: translateY(-100%) rotate(${this.getAngle().m}deg);`;
+        this.secondNode.style.cssText += `;transform: translateY(-100%) rotate(${this.getAngle().s}deg);`;
     }
     getCanvas() {
         const ele = document.createElement('canvas');
@@ -102,9 +122,9 @@ class Dial {
         const second = Number(Time.getDate().seconds);
         const minPer = minute / 60;
         const secPer = second / 60;
-        let secondAngle = (360 / 60) * second;
-        let minuteAngle = (360 / 60) * (minute + secPer);
-        let hourAngle = (360 / 12) * (hour + minPer);
+        let secondAngle = ((360 / 60) * second) + (1 / 4) * 360;
+        let minuteAngle = ((360 / 60) * (minute + secPer)) + (1 / 4) * 360;
+        let hourAngle = ((360 / 12) * (hour + minPer)) + (1 / 4) * 360;
         return {
             m: minuteAngle,
             h: hourAngle,

@@ -9,6 +9,7 @@
         height: 100%;
         border-radius: 50%;
         border: 1px solid $black;
+        box-sizing: border-box;
     }
     &-doc {
         width: 10px;
@@ -52,6 +53,21 @@
         height: 1px;
         &-hand {
             width: 90%;
+        }
+    }
+    &.mode-small {
+        .#{$prefix}-doc {
+            width: 2px;
+            height: 2px;
+        }
+        .#{$prefix}-hour {
+            height: 3px;
+        }
+        .#{$prefix}-minute {
+            height: 2px;
+        }
+        .#{$prefix}-second {
+            height: 1px;
         }
     }
 }

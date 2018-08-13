@@ -1,5 +1,5 @@
 import utils from './../utils/utils';
-import Time from './time';
+import Time from './../utils/time';
 class Digital {
     constructor(config) {
         this.config = config;

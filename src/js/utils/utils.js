@@ -1,22 +1,27 @@
 const utils = {
-    $: function (selector) {
+    $(selector) {
         return document.querySelector(selector);
     },
-    loop: function (callback, interval) {
+    loop(callback, interval) {
         if (!interval) {
-            interval = (1 / 60) * 1000;
+            interval = 100;
         }
         if (this.timer) {
             clearTimeout(this.timer);
         }
-        this.timer = setTimeout(() => {
-            typeof callback === 'function' && callback();
-            setTimeout(this.loop(() => {
-                callback();
-            }, interval), interval);
-        }, interval);
+        this.timer = setInterval(this.throttle({
+            method: callback, 
+            wait: 500,
+            ctx: this,
+            immediate: true,
+            arguments: [],
+        }), interval);
+        // this.timer = setTimeout(() => {
+        //     typeof callback === 'function' && callback();
+        //     setTimeout(this.loop(callback, interval), interval);
+        // }, interval);
     },
-    extend: function (target, ...args) {
+    extend(target, ...args) {
         const result = target || {};
         if (result instanceof Object) {
             args.forEach((obj) => {
@@ -34,7 +39,7 @@ const utils = {
         }
         return result;
     },
-    parseToDOM: function (str) {
+    parseToDOM(str) {
         const ele = document.createElement('div');
         ele.innerHTML = str;
         return ele.children[0];
@@ -48,6 +53,37 @@ const utils = {
         }
         callback.call(context);
         this.loop(callback.bind(context));
+    },
+    addClass(ele, className) {
+        let _class = ele.getAttribute('class');
+        _class += ` ${className}`;
+        ele.setAttribute('class', _class);
+    },
+    removeClass(ele, className) {
+        let _class = ele.getAttribute('class');
+        _class.replace(className, '');
+    },
+    throttle(cof) {
+        const o = this.extend({
+            method: () => {}, 
+            wait: 1000,
+            ctx: this,
+            immediate: true,
+            arguments: [],
+        }, cof);
+        let timer;
+        return () => {
+            if (o.immediate) {
+                o.method.apply(o.ctx, o.arguments);
+                o.immediate = false;
+            }
+            if (!timer) {
+                timer = setTimeout(() => {
+                    timer = null;
+                    o.method.apply(o.ctx, o.arguments);
+                }, o.wait);
+            }
+        };
     },
 };
 
