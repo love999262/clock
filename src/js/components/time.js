@@ -1,44 +1,45 @@
 class Time {
-    constructor() {
-    }
-    getDate() {
-        this.date = new Date();
+    constructor() {}
+    static getDate() {
+        Time.date = new Date();
         return {
-            date: this._getDate,
-            day: this._getDay,
-            month: this._getMonth,
-            year: this._getYear,
-            hours: this._getHours,
-            minutes: this._getMinutes,
-            seconds: this._getSeconds,
+            date: Time._getDate,
+            day: Time._getDay,
+            month: Time._getMonth,
+            year: Time._getYear,
+            hours: Time._getHours,
+            minutes: Time._getMinutes,
+            seconds: Time._getSeconds,
         };
     }
-    convert(val) {
+    static convert(val) {
         if (Number(val) < 10) {
             val = '0' + val;
+        } else {
+            val = String(val);
         }
         return val;
     }
-    get _getDate() {
-        return this.convert(this.date.getDate());
+    static get _getDate() {
+        return Time.convert(Time.date.getDate());
     }
-    get _getDay() {
-        return this.convert(this.date.getDay());
+    static get _getDay() {
+        return Time.convert(Time.date.getDay());
     }
-    get _getMonth() {
-        return this.convert(this.date.getMonth() + 1);
+    static get _getMonth() {
+        return Time.convert(Time.date.getMonth() + 1);
     }
-    get _getYear() {
-        return this.convert(this.date.getFullYear());
+    static get _getYear() {
+        return Time.convert(Time.date.getFullYear());
     }
-    get _getHours() {
-        return this.convert(this.date.getHours());
+    static get _getHours() {
+        return Time.convert(Time.date.getHours());
     }
-    get _getMinutes() {
-        return this.convert(this.date.getMinutes());
+    static get _getMinutes() {
+        return Time.convert(Time.date.getMinutes());
     }
-    get _getSeconds() {
-        return this.convert(this.date.getSeconds());
+    static get _getSeconds() {
+        return Time.convert(Time.date.getSeconds());
     }
 }
 

@@ -1,5 +1,8 @@
+import Time from './time';
 class Dial {
     constructor(config) {
+        this.config = config;
+        this.time = new Time();
         this.render();
     }
     render() {
@@ -32,6 +35,10 @@ class Dial {
     renderTimeLabel(text) {
         const radius = this.config.size / 2;
         this.ctx.fillText(text, 0, -radius * .8);
+    }
+    getAngle() {
+        const hour = Time.getDate().hours;
+        const minute = Time.getDate().minutes;
     }
 }
 

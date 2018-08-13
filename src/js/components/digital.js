@@ -3,7 +3,6 @@ import Time from './time';
 class Digital {
     constructor(config) {
         this.config = config;
-        this.time = new Time();
         this.container = utils.$(this.config.selector)[0];
         switch (this.config.renderType) {
             case 'css':
@@ -26,7 +25,7 @@ class Digital {
         utils.loop(callback.bind(this));
     }
     getTime() {
-        return this.time.getDate();
+        return Time.getDate();
     }
     getText() {
         return `${this.getTime().hours} : ${this.getTime().minutes} : ${this.getTime().seconds}`;
