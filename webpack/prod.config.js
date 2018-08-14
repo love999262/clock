@@ -2,6 +2,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
 
@@ -80,6 +81,10 @@ module.exports = {
     plugins: [
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
+        new CopyWebpackPlugin([{
+            from: path.resolve(__dirname, '../index.d.ts'),
+            to: path.resolve(__dirname, '../dist/index.d.ts'),
+        }]),
     ],
     node: {
         dgram: 'empty',

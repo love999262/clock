@@ -35,9 +35,6 @@ class Clock {
         }
         return this.clock;
     }
-    setTime(o) {
-        
-    }
 }
 
 export default Clock;
