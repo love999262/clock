@@ -82,7 +82,7 @@ module.exports = {
         new webpack.NamedModulesPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new CopyWebpackPlugin([{
-            from: path.resolve(__dirname, '../index.d.ts'),
+            from: path.resolve(__dirname, '../types/index.d.ts'),
             to: path.resolve(__dirname, '../dist/index.d.ts'),
         }]),
     ],
