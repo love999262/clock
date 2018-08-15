@@ -18,5 +18,7 @@ interface ConfigInterface {
     digital?: DigitalInterface;
 }
 declare class Clock {
-    constructor(config: configInterface)
+    constructor(config: ConfigInterface)
 }
+
+export default Clock;
