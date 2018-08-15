@@ -90,21 +90,27 @@ class Dial {
     }
     getCanvas() {
         const ele = document.createElement('canvas');
-        ele.width = this.config.size;
-        ele.height = this.config.size;
+        ele.width = this.size;
+        ele.height = this.size;
         this.ctx = ele.getContext('2d');
         const ctx = this.ctx;
+        if (this.hasBorder) {
+            ctx.strokeStyle = this.config.color;
+        }
+        ctx.fillStyle = this.config.bgColor;
         ctx.beginPath();
-        const center = this.config.size / 2;
-        const radius = this.config.size / 2;
-        ctx.strokeStyle = this.config.color;
+        const center = this.size / 2;
+        const radius = this.size / 2;
         // draw panel
         ctx.arc(center, center, radius, 0, 2 * Math.PI, false);
         // translate center
         ctx.translate(center, center);
-        if (this.config.hasTimeLabel) {
-            this.renderTimeLabel(ctx);
-        }
+        // if (this.config.hasTimeLabel) {
+        //     this.renderTimeLabel(ctx);
+        // }
+        // draw second handle
+        ctx.moveTo(0, 0);
+        ctx.lineTo(0, -radius * .9);
         // draw minute handle
         ctx.moveTo(0, 0);
         ctx.lineTo(0, -radius * .8);
@@ -115,10 +121,10 @@ class Dial {
         this.container.appendChild(ele);
     }
     canvasRender() {
-        
+
     }
     renderTimeLabel(text) {
-        const radius = this.config.size / 2;
+        const radius = this.size / 2;
         this.ctx.fillText(text, 0, -radius * .8);
     }
     getAngle() {
