@@ -24,7 +24,7 @@ class Digital {
         return `${this.getTime().hours} : ${this.getTime().minutes} : ${this.getTime().seconds}`;
     }
     cssRender() {
-        this.container.style.cssText += `;font-size: ${this.config.digital.fontSize}px; color: ${this.config.digital.color};`;
+        this.container.style.cssText += `;font-size: ${this.config.digital.fontSize}px; color: ${this.config.digital.color}; white-space: nowrap`;
         this.container.innerText = this.getText();
     }
     getCanvas() {

@@ -85,6 +85,9 @@ const utils = {
             }
         };
     },
+    drag(ele) {
+        
+    },
 };
 
 export default utils;

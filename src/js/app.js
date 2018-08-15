@@ -6,13 +6,14 @@ class Clock {
     constructor(config) {
         this.config = utils.extend({
             selector: '.clock',
-            type: 'digital',
+            type: 'dial',
             renderType: 'css',
-            color: '#000',
-            bgColor: '#fff',
+            color: '#fff',
+            bgColor: 'rgba(0, 0, 0, .35)',
             prefix: 'syg-clock',
+            draggable: true,
             dial: {
-                
+                hasBorder: true,
             },
             digital: {
                 fontSize: 12,

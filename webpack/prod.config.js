@@ -86,6 +86,29 @@ module.exports = {
             to: path.resolve(__dirname, '../dist/index.d.ts'),
         }]),
     ],
+
+    optimization: {
+        minimizer: [
+            new UglifyJsPlugin({
+                sourceMap: true,
+                extractComments: false,
+                uglifyOptions: {
+                    compress: {
+                        drop_console: true,
+                        drop_debugger: true
+                    },
+                    output: {
+                        /**
+                         * @desc escape Unicode characters in strings and regexps
+                         *       (affects directives with non-ascii characters becoming invalid)
+                         */
+                        ascii_only: false
+                    }
+                }
+            })
+        ]
+    },
+    
     node: {
         dgram: 'empty',
         fs: 'empty',

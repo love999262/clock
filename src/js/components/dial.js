@@ -5,6 +5,7 @@ class Dial {
         this.config = config;
         this.container = utils.$(this.config.selector);
         this.size = this.container.clientWidth && (this.container.clientWidth > this.container.clientHeight) ? this.container.clientHeight : this.container.clientWidth;
+        this.hasBorder = this.config.dial.hasBorder;
         if (this.size <= 50) {
             this.isSmall = true;
         }
@@ -20,6 +21,7 @@ class Dial {
                 utils.render(this.canvasRenver, this);
                 break;
             default:
+                this.getCss();
                 utils.render(this.cssRender, this);
         }
     }
@@ -74,6 +76,9 @@ class Dial {
             if (this.config.bgColor) {
                 this.panel.style.cssText += `;background-color: ${this.config.bgColor};`;
             }
+            if (!this.hasBorder) {
+                this.panel.style.cssText += ';border: none;';
+            }
             this.dialTemplate.style.cssText += `;width: ${this.size}px; height: ${this.size}px;`;
         }
         this.container.appendChild(this.dialTemplate);
@@ -110,7 +115,7 @@ class Dial {
         this.container.appendChild(ele);
     }
     canvasRender() {
-
+        
     }
     renderTimeLabel(text) {
         const radius = this.config.size / 2;
