@@ -1,5 +1,5 @@
 import './scss/index.scss';
 
 import Clock from './js/app';
-window.Clock = Clock;
+window.Clock = window.Clock || Clock;
 export default Clock;
