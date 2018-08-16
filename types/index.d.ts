@@ -1,10 +1,10 @@
 interface DialInterface {
-
+    hasTimeLabel?: true,
+    hasBorder?: true,
 }
 
 interface DigitalInterface {
     fontSize?: string;
-    color?: string;
 }
 
 interface ConfigInterface {
