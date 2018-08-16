@@ -134,13 +134,13 @@ class Dial {
 
     }
     createLabel(key) {
-        return utils.parseToDOM(`<div class="${this.prefix}-timelabel-label" data-label=${key}><span class="${this.prefix}-timelabel-label-key">${key}</span></div>`);
+        return utils.parseToDOM(`<div class="${this.prefix}-timelabel-label" data-label=${key}><div class="${this.prefix}-timelabel-label-key">${key}</div></div>`);
     }
     renderTimeLabel() {
         for (let i = 1; i <= 12; i++) {
             const label = this.createLabel(i);
             label.style.cssText += `;transform: rotate(${(360 / 12) * i}deg);`;
-            utils.find(label, `.${this.prefix}-timelabel-label-key`).style.cssText += `;color: ${this.config.color};`;
+            utils.find(label, `.${this.prefix}-timelabel-label-key`).style.cssText += `;color: ${this.config.color}; transform: rotate(${360 - ((360 / 12) * i)}deg);`;
             this.timeLabel.appendChild(label);
         }
     }
