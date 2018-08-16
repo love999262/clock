@@ -138,7 +138,9 @@ class Dial {
     }
     renderTimeLabel() {
         for (let i = 1; i <= 12; i++) {
-            this.timeLabel.appendChild(this.createLabel(i));
+            const label = this.createLabel(i);
+            label.style.cssText += `;transform: rotate(${(360 / 12) * i}deg); color: ${this.config.color};`;
+            this.timeLabel.appendChild(label);
         }
     }
     getAngle() {

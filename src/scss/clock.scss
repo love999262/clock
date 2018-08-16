@@ -68,10 +68,6 @@
             position: absolute;
             top: 0;
             left: 0;
-            transform: rotate(90deg);
-            &-key {
-                transform: rotate(90deg);
-            }
         }
     }
     &.mode-small {
