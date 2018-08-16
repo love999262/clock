@@ -55,6 +55,25 @@
             width: 90%;
         }
     }
+    &-timelabel {
+        font-size: 20px;
+        position: relative;
+        text-align: center;
+        margin: auto;
+        &-label {
+            transform-origin: bottom;
+            height: 100%;
+            width: 100%;
+            font-size: 1em;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform: rotate(90deg);
+            &-key {
+                transform: rotate(90deg);
+            }
+        }
+    }
     &.mode-small {
         .#{$prefix}-doc {
             width: 2px;

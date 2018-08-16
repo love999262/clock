@@ -6,6 +6,7 @@ class Dial {
         this.container = utils.$(this.config.selector);
         this.size = this.container.clientWidth && (this.container.clientWidth > this.container.clientHeight) ? this.container.clientHeight : this.container.clientWidth;
         this.hasBorder = this.config.dial.hasBorder;
+        this.hasTimeLabel = this.config.dial.hasTimeLabel;
         if (this.size <= 50) {
             this.isSmall = true;
         }
@@ -40,6 +41,8 @@ class Dial {
                         <div class="${this.prefix}-second">
                             <div class="${this.prefix}-second-hand"></div>
                         </div>
+                        <div class="${this.prefix}-timelabel">
+                        </div>
                     </div>
                 </div>
             `);
@@ -61,6 +64,9 @@ class Dial {
     get panel() {
         return utils.find(this.dialTemplate, `.${this.prefix}-panel`);
     }
+    get timeLabel() {
+        return utils.find(this.dialTemplate, `.${this.prefix}-timelabel`);
+    }
     getCss() {
         if (this.size) {
             if (this.isSmall) {
@@ -78,6 +84,10 @@ class Dial {
             }
             if (!this.hasBorder) {
                 this.panel.style.cssText += ';border: none;';
+            }
+            if (this.hasTimeLabel && this.size >= 120) {
+                this.timeLabel.style.cssText += `;font-size: ${this.size / 10}px; width: ${this.size / 10}px; height: ${this.size / 2}px;`;
+                this.renderTimeLabel();
             }
             this.dialTemplate.style.cssText += `;width: ${this.size}px; height: ${this.size}px;`;
         }
@@ -123,9 +133,13 @@ class Dial {
     canvasRender() {
 
     }
-    renderTimeLabel(text) {
-        const radius = this.size / 2;
-        this.ctx.fillText(text, 0, -radius * .8);
+    createLabel(key) {
+        return utils.parseToDOM(`<div class="${this.prefix}-timelabel-label" data-label=${key}><span class="${this.prefix}-timelabel-label-key">${key}</span></div>`);
+    }
+    renderTimeLabel() {
+        for (let i = 1; i <= 12; i++) {
+            this.timeLabel.appendChild(this.createLabel(i));
+        }
     }
     getAngle() {
         const hour = Number(Time.getDate().hours);

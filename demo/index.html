@@ -12,8 +12,8 @@
         }
         
         .clock {
-            width: 200px;
-            height: 200px;
+            width: 120px;
+            height: 120px;
             margin: 50px;
         }
     </style>
@@ -26,9 +26,7 @@
         console.log(Clock);
         const clock = new Clock({
             type: 'dial',
-            renderType: 'canvas',
-            color: '#000',
-            bgColor: '#ff0000',
+            renderType: 'css',
             digital: {
                 fontSize: 30,
             },

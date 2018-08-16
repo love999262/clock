@@ -85,6 +85,32 @@ const utils = {
             }
         };
     },
+
+    setData(ele, key, value) {
+        if (ele.dataset) {
+            ele.dataset(key);
+        } else {
+            ele.setAttribute(`data-${key}`, value);
+        }
+    },
+    getData(ele, key) {
+        if (ele.dataset) {
+            ele.dataset(key);
+        } else {
+            ele.getAttribute(`data-${key}`);
+        }
+    },
+    show(ele) {
+        ele.style.cssText += `;display${this.getData(ele, 'display' || 'block')}`;
+    },
+    hide(ele) {
+        const displayStatus = window && window.getComputedStyle(ele).display || 'block';
+        this.setData(ele, 'display', displayStatus);
+        ele.style.cssText += ';display: none;';
+    },
+    degtorad(deg) {
+        return (Math.PI / 180) * deg;
+    },
     drag(ele) {
         
     },

@@ -13,6 +13,7 @@ class Clock {
             prefix: 'syg-clock',
             draggable: true,
             dial: {
+                hasTimeLabel: true,
                 hasBorder: true,
             },
             digital: {
