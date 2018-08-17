@@ -1,4 +1,15 @@
 ### A simple plugin of clock,support dial mode and digital mode.
+[repertory](https://github.com/love999262/clock)
+
+- Install
+NPM
+```
+$npm install syg-clock 
+```
+or
+```
+<script type="text/javascript" src="/dist/clock.js"></script>
+```
 
 - API
 
