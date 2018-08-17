@@ -68,6 +68,9 @@
             position: absolute;
             top: 0;
             left: 0;
+            &-key {
+                user-select: none;
+            }
         }
     }
     &.mode-small {
