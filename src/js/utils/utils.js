@@ -6,9 +6,9 @@ const utils = {
         if (!interval) {
             interval = 100;
         }
-        if (this.timer) {
-            clearTimeout(this.timer);
-        }
+        // if (this.timer) {
+        //     clearTimeout(this.timer);
+        // }
         this.timer = setInterval(this.throttle({
             method: callback, 
             wait: 500,
