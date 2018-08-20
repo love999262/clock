@@ -109,7 +109,7 @@ const utils = {
         ele.style.cssText += ';display: none;';
     },
     degtorad(deg) {
-        return (Math.PI / 180) * deg;
+        return Math.PI / 180 * deg;
     },
     drag(ele) {
         

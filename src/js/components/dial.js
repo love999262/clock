@@ -9,6 +9,8 @@ class Dial {
         this.hasTimeLabel = this.config.dial.hasTimeLabel;
         if (this.size <= 50) {
             this.isSmall = true;
+        } else if(this.size >= 300) {
+            this.isLarge = true;
         }
         this.prefix = this.config.prefix;
         console.log('width', this.container.width);
@@ -19,7 +21,7 @@ class Dial {
                 break;
             case 'canvas':
                 this.getCanvas();
-                utils.render(this.canvasRenver, this);
+                utils.render(this.canvasRender, this);
                 break;
             default:
                 this.getCss();
@@ -71,6 +73,8 @@ class Dial {
         if (this.size) {
             if (this.isSmall) {
                 utils.addClass(this.dialTemplate, 'mode-small');
+            } else if(this.isLarge) {
+                utils.addClass(this.dialTemplate, 'mode-large');
             }
             if (this.config.color) {
                 this.panel.style.cssText += `;border: 1px solid ${this.config.color};`;
@@ -85,7 +89,7 @@ class Dial {
             if (!this.hasBorder) {
                 this.panel.style.cssText += ';border: none;';
             }
-            if (this.hasTimeLabel && this.size >= 120) {
+            if (this.hasTimeLabel && this.size >= 80) {
                 this.timeLabel.style.cssText += `;font-size: ${this.size / 10}px; width: ${this.size / 10}px; height: ${this.size / 2}px;`;
                 this.renderTimeLabel();
             }
@@ -94,44 +98,115 @@ class Dial {
         this.container.appendChild(this.dialTemplate);
     }
     cssRender() {
-        this.hourNode.style.cssText += `;transform: translateY(-100%) rotate(${this.getAngle().h}deg);`;
-        this.minuteNode.style.cssText += `;transform: translateY(-100%) rotate(${this.getAngle().m}deg);`;
-        this.secondNode.style.cssText += `;transform: translateY(-100%) rotate(${this.getAngle().s}deg);`;
+        this.hourNode.style.cssText += `;transform: translateY(-100%) rotate(${this.getAngle(true).h}deg);`;
+        this.minuteNode.style.cssText += `;transform: translateY(-100%) rotate(${this.getAngle(true).m}deg);`;
+        this.secondNode.style.cssText += `;transform: translateY(-100%) rotate(${this.getAngle(true).s}deg);`;
     }
     getCanvas() {
-        const ele = document.createElement('canvas');
-        ele.width = this.size;
-        ele.height = this.size;
-        this.ctx = ele.getContext('2d');
+        this.ele = document.createElement('canvas');
+        this.ele.width = this.size;
+        this.ele.height = this.size;
+        this.ctx = this.ele.getContext('2d');
+        this._getCanvas();
+        this.container.appendChild(this.ele);
+    }
+    _getCanvas() {
         const ctx = this.ctx;
-        if (this.hasBorder) {
-            ctx.strokeStyle = this.config.color;
-        }
+        ctx.strokeStyle = this.config.color;
         ctx.fillStyle = this.config.bgColor;
-        ctx.beginPath();
-        const center = this.size / 2;
-        const radius = this.size / 2;
+        this.center = this.size / 2;
+        this.radius = this.size / 2;
         // draw panel
-        ctx.arc(center, center, radius, 0, 2 * Math.PI, false);
-        // translate center
-        ctx.translate(center, center);
-        // if (this.config.hasTimeLabel) {
-        //     this.renderTimeLabel(ctx);
-        // }
-        // draw second handle
-        ctx.moveTo(0, 0);
-        ctx.lineTo(0, -radius * .9);
-        // draw minute handle
-        ctx.moveTo(0, 0);
-        ctx.lineTo(0, -radius * .8);
-        // draw hour hand
-        ctx.moveTo(0, 0);
-        ctx.lineTo(-radius * .5, 0);
-        ctx.stroke();
-        this.container.appendChild(ele);
+
+        ctx.beginPath();
+        this.ctx.save();
+        this.ctx.translate(this.center, this.center);
+        ctx.arc(0, 0, this.radius - 2, 0, 2 * Math.PI, false);
+        ctx.fill();
+        if (this.hasBorder) {
+            ctx.stroke();
+        }
+        ctx.closePath();
+        ctx.beginPath();
+        let docRad = 5;
+        if (this.isSmall) {
+            docRad = 2;
+        } else if (this.isLarge) {
+            docRad = 10;
+        }
+        ctx.fillStyle = this.config.color;
+        ctx.arc(0, 0, docRad, 0, 2 * Math.PI, false);
+        ctx.fill();
+        ctx.closePath();
+        // draw timeLabel
+        if (this.hasTimeLabel) {
+            ctx.font = `${this.size / 10}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = this.config.color;
+            this.renderCanvasTimeLabel();
+        }
+        this.ctx.restore();
+    }
+    drawHandle(key) {
+        this.ctx.beginPath();
+        this.ctx.save();
+        this.ctx.translate(this.center, this.center);
+        this.ctx.moveTo(0, 0);
+        switch (key) {
+            case 'sec':
+                this.ctx.lineWidth = 1;
+                if (this.isSmall) {
+                    this.ctx.lineWidth = 1;
+                } else if (this.isLarge) {
+                    this.ctx.lineWidth = 4;
+                }
+                this.ctx.rotate(utils.degtorad(this.getAngle().s));
+                this.ctx.lineTo(0, -this.radius * .9);
+                break;
+            case 'min':
+                this.ctx.lineWidth = 3;
+                if (this.isSmall) {
+                    this.ctx.lineWidth = 2;
+                } else if (this.isLarge) {
+                    this.ctx.lineWidth = 6;
+                }
+                this.ctx.rotate(utils.degtorad(this.getAngle().m));
+                this.ctx.lineTo(0, -this.radius * .8);
+                break;
+            case 'hour':
+                this.ctx.lineWidth = 5;
+                if (this.isSmall) {
+                    this.ctx.lineWidth = 3;
+                } else if (this.isLarge) {
+                    this.ctx.lineWidth = 8;
+                }
+                this.ctx.rotate(utils.degtorad(this.getAngle().h));
+                this.ctx.lineTo(0, -this.radius * .5);
+                break;
+        }
+        this.ctx.stroke();
+        this.ctx.restore();
+        this.ctx.closePath();
     }
     canvasRender() {
-
+        this.ctx.clearRect(0, 0, this.size, this.size);
+        this._getCanvas();
+        this.drawHandle('sec');
+        this.drawHandle('min');
+        this.drawHandle('hour');
+    }
+    renderCanvasTimeLabel() {
+        for (let i = 1; i <= 12; i++) {
+            const rad = utils.degtorad(360 / 12);
+            const textPosition = -this.radius + (this.size / 10);
+            this.ctx.rotate(rad);
+            this.ctx.save();
+            this.ctx.translate(0, textPosition);
+            this.ctx.rotate(-utils.degtorad(360 / 12) * i);
+            this.ctx.fillText(String(i), 0, 0);
+            this.ctx.restore();
+        }
     }
     createLabel(key) {
         return utils.parseToDOM(`<div class="${this.prefix}-timelabel-label" data-label=${key}><div class="${this.prefix}-timelabel-label-key">${key}</div></div>`);
@@ -140,22 +215,27 @@ class Dial {
         for (let i = 1; i <= 12; i++) {
             const label = this.createLabel(i);
             label.style.cssText += `;transform: rotate(${(360 / 12) * i}deg);`;
-            utils.find(label, `.${this.prefix}-timelabel-label-key`).style.cssText += `;color: ${this.config.color}; transform: rotate(${360 - ((360 / 12) * i)}deg);`;
+            utils.find(label, `.${this.prefix}-timelabel-label-key`).style.cssText += `;color: ${this.config.color}; transform: rotate(-${(360 / 12) * i}deg);`;
             this.timeLabel.appendChild(label);
         }
     }
-    getAngle() {
-        const hour = Number(Time.getDate().hours);
+    getAngle(isCss) {
+        const hour = Number(Time.getDate().hours > 12 ? Time.getDate().hours : Number(Time.getDate().hours) - 12);
         const minute = Number(Time.getDate().minutes);
         const second = Number(Time.getDate().seconds);
         const minPer = minute / 60;
         const secPer = second / 60;
-        let secondAngle = ((360 / 60) * second) + (1 / 4) * 360;
-        let minuteAngle = ((360 / 60) * (minute + secPer)) + (1 / 4) * 360;
-        let hourAngle = ((360 / 12) * (hour + minPer)) + (1 / 4) * 360;
+        let secondAngle = ((360 / 60) * second);
+        let minuteAngle = ((360 / 60) * (minute + secPer));
+        let hourAngle = ((360 / 12) * (hour + minPer));
+        if (isCss) {
+            hourAngle += 90;
+            minuteAngle += 90;
+            secondAngle += 90;
+        }
         return {
-            m: minuteAngle,
             h: hourAngle,
+            m: minuteAngle,
             s: secondAngle,
         };
     }

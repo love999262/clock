@@ -7,7 +7,7 @@ class Clock {
         this.config = utils.extend({
             selector: '.clock',
             type: 'dial',
-            renderType: 'css',
+            renderType: 'canvas',
             color: '#fff',
             bgColor: 'rgba(0, 0, 0, .35)',
             prefix: 'syg-clock',

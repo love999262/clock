@@ -1,6 +1,6 @@
 {
   "name": "syg-clock",
-  "version": "1.0.16",
+  "version": "1.0.17",
   "description": "js clock",
   "main": "dist/clock.js",
   "types": "dist/index.d.ts",

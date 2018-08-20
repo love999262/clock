@@ -2,6 +2,7 @@
 [repertory](https://github.com/love999262/clock)
 
 - Install
+
 NPM
 ```
 $npm install syg-clock 
@@ -41,11 +42,15 @@ const clock = new Clock({
     },
 }); 
 ```
+- warn
+
+the dial css type force hide the timeLabel while the container's size less than 80px, if you want to show it change the condition in dial.js.
+
 - TODO List
- - canvas mode
+ - <del>canvas mode</del>
  - <del>timelabel mode</del>
  - show week and month
  - performance optimization
- - draggale
+ - drag mode
 
-- if you want to controbute code view [build](./build.md)
+### if you want to contribute code view [build](./build.md)
