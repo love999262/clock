@@ -1,5 +1,8 @@
 ### A simple plugin of clock,support dial mode and digital mode.
+
 [repertory](https://github.com/love999262/clock)
+
+[Demo](https://love999262.github.io/clock/demo/index.html)
 
 - Install
 
