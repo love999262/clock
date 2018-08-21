@@ -17,8 +17,10 @@ class Clock {
                 hasBorder: true,
             },
             digital: {
-                fontSize: 12,
+                fontSize: 24,
                 fontFamily: 'Arial',
+                hasDay: true,
+                // textStroke: false,
             },
         }, config);
         console.log('config', this.config);

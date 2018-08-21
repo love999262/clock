@@ -3,32 +3,30 @@ import Time from './../utils/time';
 class Digital {
     constructor(config) {
         this.config = config;
+        this.config = utils.extend(config, config.digital);
         this.container = utils.$(this.config.selector);
+        this.config.size = this.container.clientWidth && (this.container.clientWidth > this.container.clientHeight) ? this.container.clientHeight : this.container.clientWidth;
         switch (this.config.renderType) {
             case 'css':
                 this.getCss();
                 utils.render(this.cssRender, this);
                 break;
-            case 'canvas':
-                this.getCanvas();
-                utils.render(this.canvasRenver, this);
-                break;
+            // case 'canvas':
+            //     this.getCanvas();
+            //     utils.render(this.canvasRenver, this);
+            //     break;
             default:
                 this.getCss();
                 utils.render(this.cssRender, this);
         }
 
     }
-    getTime() {
-        return `${Time.getDate().hours} : ${Time.getDate().minutes} : ${Time.getDate().seconds}`;
-    }
     get digitalTemplate() {
         if (!this._digitalTpl) {
             this._digitalTpl = utils.parseToDOM(`
                 <div class="${this.config.prefix}-digital">
                     <div class="${this.config.prefix}-digital-time"></div>
-                    <div class="${this.config.prefix}-digital-week"></div>
-                    <div class="${this.config.prefix}-digital-month"></div>
+                    ${this.config.hasDay ? `<div class="${this.config.prefix}-digital-day"></div>` : ''}
                 </div>
             `);
         }
@@ -40,29 +38,78 @@ class Digital {
     get weekNode() {
         return utils.find(this.digitalTemplate, `.${this.config.prefix}-digital-week`);
     }
-    get monthNode() {
-        return utils.find(this.digitalTemplate, `.${this.config.prefix}-digital-month`);
+    get dayNode() {
+        return utils.find(this.digitalTemplate, `.${this.config.prefix}-digital-day`);
+    }
+    get timeText() {
+        return `${Time.getDate().hours} : ${Time.getDate().minutes} : ${Time.getDate().seconds}`;
+    }
+    get weekText() {
+        return `${Time.week[String(Number(Time.getDate().day))]}`;
+    }
+    get monthText() {
+        return `${Time.month[String(Number(Time.getDate().month))]}`;
+    }
+    get dateText() {
+        return `${Time.getDate().date}`;
+    }
+    get dateYear() {
+        return `${Time.getDate().year}`;
+    }
+    isRenderDay() {
+        if(!this.currentDate) {
+            this.currentDate = this.dateText;
+            return true;
+        }
+        if (this.currentDate !== this.dateText) {
+            this.currentDate = this.dateText;
+            return true;
+        }
+        return false;
     }
     getCss() {
-        this.timeNode.style.cssText += `;font-size: ${this.config.digital.fontSize}px; font-family: ${this.config.fontFamily} color: ${this.config.digital.color}; white-space: nowrap`;
-        this.weekNode.style.cssText += `;font-size: ${this.config.digital.fontSize}px; font-family: ${this.config.fontFamily} color: ${this.config.digital.color}; white-space: nowrap`;
-        this.monthNode.style.cssText += `;font-size: ${this.config.digital.fontSize}px; font-family: ${this.config.fontFamily} color: ${this.config.digital.color}; white-space: nowrap`;
+        this.container.style.cssText += ';width: auto; height: auto;';
+        this.timeNode.style.cssText += `;font-size: ${this.config.fontSize}px; font-family: ${this.config.fontFamily}; color: ${this.config.color}; background: ${this.config.bgColor}`;
+        if (this.config.hasDay) {
+            this.dayNode.style.cssText += `;font-size: ${this.config.fontSize}px; font-family: ${this.config.fontFamily}; color: ${this.config.color}; background: ${this.config.bgColor}`;
+        }
         this.container.appendChild(this.digitalTemplate);
     }
     cssRender() {
-        this.timeNode.innerText = this.getTime();
+        this.timeNode.innerText = this.timeText;
+        if (this.config.hasDay && this.isRenderDay()) {
+            this.dayNode.innerText = `${this.weekText} ${this.monthText} ${this.dateText} ${this.dateYear}`;
+        }
+    }
+    renderCanvasText() {
+        this.ctx.font = `${this.config.fontSize}px ${this.config.fontFamily}`;
+        this.ctx.textAlign = 'center';
+        this.ctx.fillStyle = this.config.color;
+        this.ctx.textBaseline = 'middle';
     }
     getCanvas() {
         this.canvas = document.createElement('canvas');
-        this.canvas.width = this.config.size;
-        this.canvas.height = this.config.size;
         this.ctx = this.canvas.getContext('2d');
-        this.ctx.font = `${this.config.digital.fontSize}px Arial`;
+        console.log(this.ctx.measureText(`${this.weekText} ${this.monthText} ${this.dateText} ${this.dateYear}`));
+        this.renderCanvasText();
+        this.size = this.ctx.measureText(this.timeText).width;
+        if (this.config.hasDay) {
+            this.size < this.ctx.measureText(`${this.weekText} ${this.monthText} ${this.dateText} ${this.dateYear}`).width ? this.size = this.ctx.measureText(`${this.weekText} ${this.monthText} ${this.dateText} ${this.dateYear}`).width : this.size = this.size;
+        }
+        this.canvas.width = this.size;
+        this.canvas.height = this.config.fontSize * 2;
+        this.ctx.strokeStyle = this.config.color;
+        this.ctx.fillStyle = this.config.bgColor;
+        // this.renderCanvasText();
         this.container.appendChild(this.canvas);
     }
     canvasRenver() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.fillText(this.getText(), 0, this.config.digital.fontSize);
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.fillText(this.timeText, 0, this.config.fontSize);
+        if (this.config.hasDay) {
+            this.ctx.fillText(`${this.weekText} ${this.monthText} ${this.dateText} ${this.dateYear}`, 0, this.config.fontSize * 2);
+        }        
     }
 }
 

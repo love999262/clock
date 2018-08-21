@@ -1,7 +1,7 @@
 {
   "name": "kaguya-clock",
-  "version": "1.0.1",
-  "description": "easy, light, configurable, multiplatform, JavaScript clock plugin, support react/vue/ng/jquery/Vanilla JS/ect.",
+  "version": "1.0.2",
+  "description": "A easy, light, configurable, multiplatform, JavaScript clock plugin, support TypeScript/react/vue/ng/jquery/Vanilla JS/ect.",
   "main": "dist/clock.js",
   "types": "dist/index.d.ts",
   "scripts": {

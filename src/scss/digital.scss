@@ -1,5 +1,10 @@
 @import 'global';
 
 .#{$prefix}-digital {
-    float: left;
+    overflow: hidden;
+    &-time, &-day {
+        white-space: nowrap;
+        font-size: 1em;
+        text-align: center;
+    }
 }

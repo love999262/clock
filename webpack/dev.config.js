@@ -16,7 +16,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, '..', 'dist'),
         filename: '[name].js',
-        library: 'clock',
+        library: 'Clock',
         libraryTarget: 'umd',
         libraryExport: 'default',
         umdNamedDefine: true,

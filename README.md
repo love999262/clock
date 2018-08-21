@@ -28,7 +28,8 @@ or
 | dial.hasTimeLabel    | true/false                       | set broder   
 | digital              | object                           | digital config       
 | digital.fontSize     | 12                               | fontsize of digital         
-
+| digital.fontFamily   | 'Arial'                          | fontfamily of digital   
+| digital.hasDay       | true/false                       | is show day   
 ```javascript
 const clock = new Clock({
     selector: '.clock',
@@ -41,13 +42,15 @@ const clock = new Clock({
         hasBorder: true,
     },
     digital: {
-        fontSize: 12,
+        fontSize: 24,
+        fontFamily: 'Arial',
+        hasDay: true,
     },
 }); 
 ```
 - warn
 
-the dial css type force hide the timeLabel while the container's size less than 80px, if you want to show it change the condition in dial.js.
+the dial css type force hide the timeLabel while the container's size less than 80px, if you want to show it you can choose canvas type or change the condition in dial.js.
 
 - TODO List
  - <del>canvas mode</del>

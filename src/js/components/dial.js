@@ -3,16 +3,14 @@ import utils from './../utils/utils';
 class Dial {
     constructor(config) {
         this.config = config;
+        this.config = utils.extend(config, config.dial);
         this.container = utils.$(this.config.selector);
-        this.size = this.container.clientWidth && (this.container.clientWidth > this.container.clientHeight) ? this.container.clientHeight : this.container.clientWidth;
-        this.hasBorder = this.config.dial.hasBorder;
-        this.hasTimeLabel = this.config.dial.hasTimeLabel;
-        if (this.size <= 50) {
-            this.isSmall = true;
-        } else if(this.size >= 300) {
-            this.isLarge = true;
+        this.config.size = this.container.clientWidth && (this.container.clientWidth > this.container.clientHeight) ? this.container.clientHeight : this.container.clientWidth;
+        if (this.config.size <= 50) {
+            this.config.isSmall = true;
+        } else if(this.config.size >= 300) {
+            this.config.isLarge = true;
         }
-        this.prefix = this.config.prefix;
         console.log('width', this.container.width);
         switch (this.config.renderType) {
             case 'css':
@@ -31,19 +29,19 @@ class Dial {
     get dialTemplate() {
         if (!this._dialTpl) {
             this._dialTpl = utils.parseToDOM(`
-                <div class="${this.prefix}">
-                    <div class="${this.prefix}-panel">
-                        <div class="${this.prefix}-doc"></div>
-                        <div class="${this.prefix}-hour">
-                            <div class="${this.prefix}-hour-hand"></div>
+                <div class="${this.config.prefix}">
+                    <div class="${this.config.prefix}-panel">
+                        <div class="${this.config.prefix}-doc"></div>
+                        <div class="${this.config.prefix}-hour">
+                            <div class="${this.config.prefix}-hour-hand"></div>
                         </div>
-                        <div class="${this.prefix}-minute">
-                            <div class="${this.prefix}-minute-hand"></div>
+                        <div class="${this.config.prefix}-minute">
+                            <div class="${this.config.prefix}-minute-hand"></div>
                         </div>
-                        <div class="${this.prefix}-second">
-                            <div class="${this.prefix}-second-hand"></div>
+                        <div class="${this.config.prefix}-second">
+                            <div class="${this.config.prefix}-second-hand"></div>
                         </div>
-                        <div class="${this.prefix}-timelabel">
+                        <div class="${this.config.prefix}-timelabel">
                         </div>
                     </div>
                 </div>
@@ -52,48 +50,48 @@ class Dial {
         return this._dialTpl;
     }
     get hourNode() {
-        return utils.find(this.dialTemplate, `.${this.prefix}-hour`);
+        return utils.find(this.dialTemplate, `.${this.config.prefix}-hour`);
     }
     get minuteNode() {
-        return utils.find(this.dialTemplate, `.${this.prefix}-minute`);
+        return utils.find(this.dialTemplate, `.${this.config.prefix}-minute`);
     }
     get secondNode() {
-        return utils.find(this.dialTemplate, `.${this.prefix}-second`);
+        return utils.find(this.dialTemplate, `.${this.config.prefix}-second`);
     }
     get doc() {
-        return utils.find(this.dialTemplate, `.${this.prefix}-doc`);
+        return utils.find(this.dialTemplate, `.${this.config.prefix}-doc`);
     }
     get panel() {
-        return utils.find(this.dialTemplate, `.${this.prefix}-panel`);
+        return utils.find(this.dialTemplate, `.${this.config.prefix}-panel`);
     }
     get timeLabel() {
-        return utils.find(this.dialTemplate, `.${this.prefix}-timelabel`);
+        return utils.find(this.dialTemplate, `.${this.config.prefix}-timelabel`);
     }
     getCss() {
-        if (this.size) {
-            if (this.isSmall) {
+        if (this.config.size) {
+            if (this.config.isSmall) {
                 utils.addClass(this.dialTemplate, 'mode-small');
-            } else if(this.isLarge) {
+            } else if(this.config.isLarge) {
                 utils.addClass(this.dialTemplate, 'mode-large');
             }
             if (this.config.color) {
                 this.panel.style.cssText += `;border: 1px solid ${this.config.color};`;
-                utils.find(this.hourNode, `.${this.prefix}-hour-hand`).style.cssText += `;background-color: ${this.config.color};`;
-                utils.find(this.minuteNode, `.${this.prefix}-minute-hand`).style.cssText += `;background-color: ${this.config.color};`;
-                utils.find(this.secondNode, `.${this.prefix}-second-hand`).style.cssText += `;background-color: ${this.config.color};`;
+                utils.find(this.hourNode, `.${this.config.prefix}-hour-hand`).style.cssText += `;background-color: ${this.config.color};`;
+                utils.find(this.minuteNode, `.${this.config.prefix}-minute-hand`).style.cssText += `;background-color: ${this.config.color};`;
+                utils.find(this.secondNode, `.${this.config.prefix}-second-hand`).style.cssText += `;background-color: ${this.config.color};`;
                 this.doc.style.cssText += `;background-color: ${this.config.color};`;
             }
             if (this.config.bgColor) {
                 this.panel.style.cssText += `;background-color: ${this.config.bgColor};`;
             }
-            if (!this.hasBorder) {
+            if (!this.config.hasBorder) {
                 this.panel.style.cssText += ';border: none;';
             }
-            if (this.hasTimeLabel && this.size >= 80) {
-                this.timeLabel.style.cssText += `;font-size: ${this.size / 10}px; width: ${this.size / 10}px; height: ${this.size / 2}px;`;
+            if (this.config.hasTimeLabel && this.config.size >= 80) {
+                this.timeLabel.style.cssText += `;font-size: ${this.config.size / 10}px; width: ${this.config.size / 10}px; height: ${this.config.size / 2}px;`;
                 this.renderTimeLabel();
             }
-            this.dialTemplate.style.cssText += `;width: ${this.size}px; height: ${this.size}px;`;
+            this.dialTemplate.style.cssText += `;width: ${this.config.size}px; height: ${this.config.size}px;`;
         }
         this.container.appendChild(this.dialTemplate);
     }
@@ -104,8 +102,8 @@ class Dial {
     }
     getCanvas() {
         this.ele = document.createElement('canvas');
-        this.ele.width = this.size;
-        this.ele.height = this.size;
+        this.ele.width = this.config.size;
+        this.ele.height = this.config.size;
         this.ctx = this.ele.getContext('2d');
         this._getCanvas();
         this.container.appendChild(this.ele);
@@ -114,8 +112,8 @@ class Dial {
         const ctx = this.ctx;
         ctx.strokeStyle = this.config.color;
         ctx.fillStyle = this.config.bgColor;
-        this.center = this.size / 2;
-        this.radius = this.size / 2;
+        this.center = this.config.size / 2;
+        this.radius = this.config.size / 2;
         // draw panel
 
         ctx.beginPath();
@@ -123,15 +121,15 @@ class Dial {
         this.ctx.translate(this.center, this.center);
         ctx.arc(0, 0, this.radius - 2, 0, 2 * Math.PI, false);
         ctx.fill();
-        if (this.hasBorder) {
+        if (this.config.hasBorder) {
             ctx.stroke();
         }
         ctx.closePath();
         ctx.beginPath();
         let docRad = 5;
-        if (this.isSmall) {
+        if (this.config.isSmall) {
             docRad = 2;
-        } else if (this.isLarge) {
+        } else if (this.config.isLarge) {
             docRad = 10;
         }
         ctx.fillStyle = this.config.color;
@@ -139,8 +137,8 @@ class Dial {
         ctx.fill();
         ctx.closePath();
         // draw timeLabel
-        if (this.hasTimeLabel) {
-            ctx.font = `${this.size / 10}px Arial`;
+        if (this.config.hasTimeLabel) {
+            ctx.font = `${this.config.size / 10}px Arial`;
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             ctx.fillStyle = this.config.color;
@@ -156,9 +154,9 @@ class Dial {
         switch (key) {
             case 'sec':
                 this.ctx.lineWidth = 1;
-                if (this.isSmall) {
+                if (this.config.isSmall) {
                     this.ctx.lineWidth = 1;
-                } else if (this.isLarge) {
+                } else if (this.config.isLarge) {
                     this.ctx.lineWidth = 4;
                 }
                 this.ctx.rotate(utils.degtorad(this.getAngle().s));
@@ -166,9 +164,9 @@ class Dial {
                 break;
             case 'min':
                 this.ctx.lineWidth = 3;
-                if (this.isSmall) {
+                if (this.config.isSmall) {
                     this.ctx.lineWidth = 2;
-                } else if (this.isLarge) {
+                } else if (this.config.isLarge) {
                     this.ctx.lineWidth = 6;
                 }
                 this.ctx.rotate(utils.degtorad(this.getAngle().m));
@@ -176,9 +174,9 @@ class Dial {
                 break;
             case 'hour':
                 this.ctx.lineWidth = 5;
-                if (this.isSmall) {
+                if (this.config.isSmall) {
                     this.ctx.lineWidth = 3;
-                } else if (this.isLarge) {
+                } else if (this.config.isLarge) {
                     this.ctx.lineWidth = 8;
                 }
                 this.ctx.rotate(utils.degtorad(this.getAngle().h));
@@ -190,7 +188,7 @@ class Dial {
         this.ctx.closePath();
     }
     canvasRender() {
-        this.ctx.clearRect(0, 0, this.size, this.size);
+        this.ctx.clearRect(0, 0, this.config.size, this.config.size);
         this._getCanvas();
         this.drawHandle('sec');
         this.drawHandle('min');
@@ -199,7 +197,7 @@ class Dial {
     renderCanvasTimeLabel() {
         for (let i = 1; i <= 12; i++) {
             const rad = utils.degtorad(360 / 12);
-            const textPosition = -this.radius + (this.size / 10);
+            const textPosition = -this.radius + (this.config.size / 10);
             this.ctx.rotate(rad);
             this.ctx.save();
             this.ctx.translate(0, textPosition);
@@ -209,13 +207,13 @@ class Dial {
         }
     }
     createLabel(key) {
-        return utils.parseToDOM(`<div class="${this.prefix}-timelabel-label" data-label=${key}><div class="${this.prefix}-timelabel-label-key">${key}</div></div>`);
+        return utils.parseToDOM(`<div class="${this.config.prefix}-timelabel-label" data-label=${key}><div class="${this.config.prefix}-timelabel-label-key">${key}</div></div>`);
     }
     renderTimeLabel() {
         for (let i = 1; i <= 12; i++) {
             const label = this.createLabel(i);
             label.style.cssText += `;transform: rotate(${(360 / 12) * i}deg);`;
-            utils.find(label, `.${this.prefix}-timelabel-label-key`).style.cssText += `;color: ${this.config.color}; transform: rotate(-${(360 / 12) * i}deg);`;
+            utils.find(label, `.${this.config.prefix}-timelabel-label-key`).style.cssText += `;color: ${this.config.color}; transform: rotate(-${(360 / 12) * i}deg);`;
             this.timeLabel.appendChild(label);
         }
     }
