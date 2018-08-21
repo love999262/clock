@@ -19,6 +19,52 @@ class Time {
         }
         return val;
     }
+    static get week() {
+        return {
+            '1': 'Mon',
+            '2': 'Tues',
+            '3': 'Wed',
+            '4': 'Thur',
+            '5': 'Fri',
+            '6': 'Sat',
+            '7': 'Sun',
+            'Mon': '1',
+            'Tues': '2',
+            'Wed': '3',
+            'Thur': '4',
+            'Fri': '5',
+            'Sat': '6',
+            'Sun': '7',
+        };
+    }
+    static get month() {
+        return {
+            '1': 'Jan.',
+            '2': 'Feb.',
+            '3': 'Mar.',
+            '4': 'Apr.',
+            '5': 'May.',
+            '6': 'Jun.',
+            '7': 'Jul.',
+            '8': 'Aug.',
+            '9': 'Sept.',
+            '10': 'Oct.',
+            '11': 'Nov.',
+            '12': 'Dec.',
+            'Jan.': '1',
+            'Feb.': '2',
+            'Mar.': '3',
+            'Apr.': '4',
+            'May.': '5',
+            'Jun.': '6',
+            'Jul.': '7',
+            'Aug.': '8',
+            'Sept.': '9',
+            'Oct.': '10',
+            'Nov.': '11',
+            'Dec.': '12',
+        };
+    }
     static get _getDate() {
         return Time.convert(Time.date.getDate());
     }

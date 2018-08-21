@@ -11,7 +11,7 @@
             padding: 0;
         }
         
-        .clock, .clock2, .clock3, .clock4, .clock5 {
+        .clock, .clock2, .clock3, .clock4, .clock5, .clock6 {
             width: 120px;
             height: 120px;
             margin: 50px;
@@ -29,6 +29,14 @@
             width: 100px;
             height: 100px;
         }
+        .clock5 {
+            width: 100px;
+            height: 100px;
+        }
+        .clock6 {
+            width: 100px;
+            height: 100px;
+        }
     </style>
 </head>
 <body>
@@ -37,6 +45,7 @@
     <div class="clock3"></div>
     <div class="clock4"></div>
     <div class="clock5"></div>
+    <div class="clock6"></div>
     <script src="../dist/clock.js"></script>
     <script src="/clock.js"></script>
     <script>
@@ -48,7 +57,6 @@
             renderType: 'css',
             color: 'gray',
             bgColor: '#fff',
-            prefix: 'syg-clock',
             draggable: true,
             dial: {
                 hasTimeLabel: true,
@@ -64,7 +72,6 @@
             renderType: 'canvas',
             color: '#000',
             bgColor: 'rgba(255, 255, 255, .35)',
-            prefix: 'syg-clock',
             draggable: true,
             dial: {
                 hasTimeLabel: true,
@@ -75,12 +82,11 @@
             },
         });
         const clock4 = new Clock({
-            selector: '.clock3',
+            selector: '.clock4',
             type: 'dial',
             renderType: 'canvas',
-            color: 'rgba(0, 161, 214, 1)',
-            bgColor: 'rgba(255, 142, 179, .25)',
-            prefix: 'syg-clock',
+            color: 'rgba(255, 142, 179, 1)',
+            bgColor: 'rgba(0, 161, 214, .25)',
             draggable: true,
             dial: {
                 hasTimeLabel: true,
@@ -91,22 +97,35 @@
             },
         });
         const clock5 = new Clock({
-            selector: '.clock4',
+            selector: '.clock5',
             type: 'digital',
             renderType: 'css',
             color: '#fff',
             bgColor: 'rgba(0, 0, 0, .35)',
-            prefix: 'syg-clock',
             draggable: true,
             dial: {
                 hasTimeLabel: true,
                 hasBorder: true,
             },
             digital: {
-                fontSize: 12,
+                fontSize: 24,
             },
         });
-        
+        const clock6 = new Clock({
+            selector: '.clock6',
+            type: 'digital',
+            renderType: 'css',
+            color: '#fff',
+            bgColor: 'rgba(0, 0, 0, .35)',
+            draggable: true,
+            dial: {
+                hasTimeLabel: true,
+                hasBorder: true,
+            },
+            digital: {
+                fontSize: 24,
+            },
+        });
     </script>
 </body>
 </html>

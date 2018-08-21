@@ -3,7 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const autoprefixer = require('autoprefixer');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-// const UglifyJsPlugin = require('webpack-uglify-js-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
 
@@ -88,20 +88,20 @@ module.exports = {
         }]),
     ],
 
-    // optimization: {
-    //     minimizer: [
-    //         new UglifyJsPlugin({
-    //             sourceMap: true,
-    //             extractComments: false,
-    //             uglifyOptions: {
-    //                 compress: {
-    //                     drop_console: true,
-    //                     drop_debugger: true
-    //                 },
-    //             }
-    //         })
-    //     ]
-    // },
+    optimization: {
+        minimizer: [
+            new UglifyJsPlugin({
+                sourceMap: false,
+                extractComments: false,
+                uglifyOptions: {
+                    compress: {
+                        drop_console: true,
+                        drop_debugger: true
+                    },
+                }
+            })
+        ]
+    },
     
     node: {
         dgram: 'empty',

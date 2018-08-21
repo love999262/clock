@@ -8,7 +8,7 @@
 
 NPM
 ```
-$npm install syg-clock 
+$npm install kaguya-clock 
 ```
 or
 ```

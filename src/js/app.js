@@ -10,7 +10,7 @@ class Clock {
             renderType: 'canvas',
             color: '#fff',
             bgColor: 'rgba(0, 0, 0, .35)',
-            prefix: 'syg-clock',
+            prefix: 'kaguya-clock',
             draggable: true,
             dial: {
                 hasTimeLabel: true,
@@ -18,6 +18,7 @@ class Clock {
             },
             digital: {
                 fontSize: 12,
+                fontFamily: 'Arial',
             },
         }, config);
         console.log('config', this.config);
