@@ -2,9 +2,9 @@ import './scss/index.scss';
 import Clock from './js/app';
 
 if (window) {
-    window.Clock = Clock;
+    window.Clock = window.Clock || Clock;
 } else {
-    global.Clock = Clock;
+    global.Clock = global.Clock || Clock;
 }
 
 export default Clock;
