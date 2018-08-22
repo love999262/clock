@@ -11,10 +11,10 @@ class Digital {
                 this.getCss();
                 utils.render(this.cssRender, this);
                 break;
-            // case 'canvas':
-            //     this.getCanvas();
-            //     utils.render(this.canvasRenver, this);
-            //     break;
+            case 'canvas':
+                this.getCanvas();
+                utils.render(this.canvasRenver, this);
+                break;
             default:
                 this.getCss();
                 utils.render(this.cssRender, this);
@@ -75,41 +75,40 @@ class Digital {
         }
         this.container.appendChild(this.digitalTemplate);
     }
+    renderCanvasText() {
+        this.ctx.font = `${this.config.fontSize}px ${this.config.fontFamily}`;
+        this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'middle';
+        this.ctx.fillStyle = this.config.color;
+    }
     cssRender() {
         this.timeNode.innerText = this.timeText;
         if (this.config.hasDay && this.isRenderDay()) {
             this.dayNode.innerText = `${this.weekText} ${this.monthText} ${this.dateText} ${this.dateYear}`;
         }
     }
-    renderCanvasText() {
-        this.ctx.font = `${this.config.fontSize}px ${this.config.fontFamily}`;
-        this.ctx.textAlign = 'center';
-        this.ctx.fillStyle = this.config.color;
-        this.ctx.textBaseline = 'middle';
-    }
     getCanvas() {
         this.canvas = document.createElement('canvas');
         this.ctx = this.canvas.getContext('2d');
-        console.log(this.ctx.measureText(`${this.weekText} ${this.monthText} ${this.dateText} ${this.dateYear}`));
         this.renderCanvasText();
         this.size = this.ctx.measureText(this.timeText).width;
         if (this.config.hasDay) {
             this.size < this.ctx.measureText(`${this.weekText} ${this.monthText} ${this.dateText} ${this.dateYear}`).width ? this.size = this.ctx.measureText(`${this.weekText} ${this.monthText} ${this.dateText} ${this.dateYear}`).width : this.size = this.size;
         }
+        this.size = Math.ceil(this.size);
         this.canvas.width = this.size;
-        this.canvas.height = this.config.fontSize * 2;
-        this.ctx.strokeStyle = this.config.color;
-        this.ctx.fillStyle = this.config.bgColor;
-        // this.renderCanvasText();
+        this.canvas.height = this.config.fontSize * (this.config.hasDay ? 3 : 2);
         this.container.appendChild(this.canvas);
     }
     canvasRenver() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.fillStyle = this.config.bgColor;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.fillText(this.timeText, 0, this.config.fontSize);
+        this.renderCanvasText();
+        this.ctx.fillText(this.timeText, this.canvas.width / 2, this.config.fontSize);
         if (this.config.hasDay) {
-            this.ctx.fillText(`${this.weekText} ${this.monthText} ${this.dateText} ${this.dateYear}`, 0, this.config.fontSize * 2);
-        }        
+            this.ctx.fillText(`${this.weekText} ${this.monthText} ${this.dateText} ${this.dateYear}`, this.canvas.width / 2, this.config.fontSize * 2);
+        }
     }
 }
 

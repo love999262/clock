@@ -59,4 +59,4 @@ the dial css type force hide the timeLabel while the container's size less than 
  - performance optimization
  - drag mode
 
-### if you want to contribute code view [build](./build.md)
+### if you want to contribute code view [build](./doc/build.md)

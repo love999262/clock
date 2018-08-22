@@ -11,7 +11,7 @@
             padding: 0;
         }
         
-        .clock, .clock2, .clock3, .clock4, .clock5, .clock6 {
+        .clock, .clock2, .clock3, .clock4, .clock5, .clock6, .clock7 {
             width: 120px;
             height: 120px;
             margin: 50px;
@@ -34,8 +34,11 @@
             height: 100px;
         }
         .clock6 {
-            width: 100px;
-            height: 100px;
+            width: 10px;
+            height: 10px;
+        }
+        .clock7 {
+            margin-left: 150px;
         }
     </style>
 </head>
@@ -46,6 +49,7 @@
     <div class="clock4"></div>
     <div class="clock5"></div>
     <div class="clock6"></div>
+    <div class="clock7"></div>
     <script src="../dist/clock.js"></script>
     <script src="/clock.js"></script>
     <script>
@@ -116,15 +120,32 @@
             type: 'digital',
             renderType: 'canvas',
             draggable: true,
-            color: '#000',
-            bgColor: 'rgba(255, 255, 255, 1)',
+            color: '#fff',
+            // bgColor: 'rgba(255, 255, 255, 1)',
+            bgColor: 'rgba(0,0,0, .3)',
             dial: {
                 hasTimeLabel: true,
                 hasBorder: true,
             },
             digital: {
-                fontFamily: 'simhei',
+                // hasDay: false,
                 fontSize: 24,
+            },
+        });
+        const clock7 = new Clock({
+            selector: '.clock7',
+            type: 'digital',
+            renderType: 'canvas',
+            draggable: true,
+            color: '#000',
+            bgColor: '#fff',
+            dial: {
+                hasTimeLabel: true,
+                hasBorder: true,
+            },
+            digital: {
+                hasDay: false,
+                fontSize: 48,
             },
         });
     </script>
