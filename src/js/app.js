@@ -1,6 +1,7 @@
 import Dial from './components/dial';
 import Digital from './components/digital';
 import utils from './utils/utils';
+import Draggable from 'kaguya-draggable';
 
 class Clock {
     constructor(config) {
@@ -25,6 +26,11 @@ class Clock {
         }, config);
         console.log('config', this.config);
         this.render(this.config);
+        if (this.config.draggable) {
+            new Draggable({
+                selector: this.config.selector,
+            });
+        }
         console.log('clock Rendered');
     }
     render(config) {
