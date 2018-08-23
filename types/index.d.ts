@@ -11,6 +11,7 @@ interface ConfigInterface {
     selector: string;
     type?: string;
     renderType?: string;
+    draggable: boolean;
     color?: string;
     bgColor?: string;
     prefix?: string;

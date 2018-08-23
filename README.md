@@ -21,6 +21,7 @@ or
 | -------------------- |:--------------------------------:| ------------:|
 | selector             | '.clock'                         | the root node
 | type                 | 'dial'/'digital'                 | mode type
+| draggable            | true/false                       | draggable
 | renderType           | 'css'/'canvas'                   | render type
 | color                | '#fff'/'rgba(255,255,255,1)'     | the stroke color
 | bgColor              | '#fff'/'rgba(255,255,255,1)'     | the bgcolor
@@ -36,6 +37,7 @@ const clock = new Clock({
     type: 'dial',
     renderType: 'css',
     color: '#fff',
+    draggable: true,
     bgColor: 'rgba(0, 0, 0, .35)',
     dial: {
         hasTimeLabel: true,
