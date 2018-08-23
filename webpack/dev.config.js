@@ -19,8 +19,6 @@ module.exports = {
         library: 'Clock',
         libraryTarget: 'umd',
         libraryExport: 'default',
-        umdNamedDefine: true,
-        globalObject: 'this',
     },
 
     resolve: {
