@@ -1,6 +1,6 @@
 interface DialInterface {
-    hasTimeLabel?: true,
-    hasBorder?: true,
+    hasTimeLabel?: boolean,
+    hasBorder?: boolean,
 }
 interface DigitalInterface {
     fontSize?: number;
