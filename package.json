@@ -49,6 +49,6 @@
   },
   "dependencies": {
     "kaguya-clock": "^1.0.5",
-    "kaguya-draggable": "^1.0.7"
+    "kaguya-draggable": "^1.0.8"
   }
 }
