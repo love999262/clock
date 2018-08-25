@@ -27,14 +27,14 @@ class Time {
             '4': 'Thur',
             '5': 'Fri',
             '6': 'Sat',
-            '7': 'Sun',
+            '0': 'Sun',
             'Mon': '1',
             'Tues': '2',
             'Wed': '3',
             'Thur': '4',
             'Fri': '5',
             'Sat': '6',
-            'Sun': '7',
+            'Sun': '0',
         };
     }
     static get month() {

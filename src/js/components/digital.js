@@ -85,10 +85,17 @@ class Digital {
         this.timeNode.innerText = this.timeText;
         if (this.config.hasDay && this.isRenderDay()) {
             this.dayNode.innerText = `${this.weekText} ${this.monthText} ${this.dateText} ${this.dateYear}`;
+            this.getCss();
         }
     }
+    getCanvasNode() {
+        if (!this.canvasNode) {
+            this.canvasNode = document.createElement('canvas');
+        }
+        return this.canvasNode;
+    }
     getCanvas() {
-        this.canvas = document.createElement('canvas');
+        this.canvas = this.getCanvasNode();
         this.ctx = this.canvas.getContext('2d');
         this.renderCanvasText();
         this.size = this.ctx.measureText(this.timeText).width;
@@ -101,6 +108,9 @@ class Digital {
         this.container.appendChild(this.canvas);
     }
     canvasRenver() {
+        if (this.config.hasDay && this.isRenderDay()) {
+            this.getCanvas();
+        }
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.fillStyle = this.config.bgColor;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
